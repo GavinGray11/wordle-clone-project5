@@ -79,7 +79,7 @@ def update_game(current_user: int, current_game: int, guess_word: str):
         )
     cur = db.lrange(guess_list, 0, -1)
     cur_count = db.get(count)
-    return {"current_id": cur_id, "list": cur, "counter": cur_count}
+    return {"current_id": cur_id, "guesses": cur, "current guesses": cur_count}
 
 
 @app.get("/get-state-game/")
@@ -94,7 +94,7 @@ def get_state_game(current_user: int, current_game: int):
         )
     cur = db.lrange(guess_list, 0, -1)
     cur_count = db.get(count)
-    return {"current_id": cur_id, "guess-list": cur, "guess-remain": cur_count}
+    return {"current_id": cur_id, "guess-list": cur, "guess-count": cur_count}
 
 
 @app.get("/get-user-id")
