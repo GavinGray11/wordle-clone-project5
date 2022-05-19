@@ -96,17 +96,6 @@ def get_state_game(current_user: int, current_game: int):
     cur_count = db.get(count)
     return {"current_id": cur_id, "guess-list": cur, "guess-remain": cur_count}
 
-@app.get("/get-username")
-def get_user(current_user: int, db: sqlite3.Connection = Depends(get_db)):
-    cur = db.cursor()
-    cur.execute("SELECT username FROM users WHERE user_id = ?", (current_user,))
-
-    rows = cur.fetchall()
-
-    for row in rows:
-        print(row)
-
-    return {"current user": rows}
 
 @app.get("/get-user-id")
 def get_user_id(current_user: str, db: sqlite3.Connection = Depends(get_db)):

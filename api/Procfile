@@ -1,4 +1,5 @@
 state:uvicorn --port $PORT currentStateApi:app --reload
 track:uvicorn --port $PORT trackApi:app --reload
 api:uvicorn --port $PORT api:app --reload
+answersApi:uvicorn --port $PORT answersApi:app --reload
 fullGame:uvicorn --port $PORT fullGame:app --reload
