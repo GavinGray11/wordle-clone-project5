@@ -5,7 +5,7 @@ import contextlib
 import redis
 from fastapi import FastAPI, Depends, Response, HTTPException, status, Request
 from pydantic import BaseModel, BaseSettings
-import json
+import httpx
 
 class Settings(BaseSettings):
     stats_database: str
@@ -95,3 +95,24 @@ def get_state_game(current_user: int, current_game: int):
     cur = db.lrange(guess_list, 0, -1)
     cur_count = db.get(count)
     return {"current_id": cur_id, "guess-list": cur, "guess-remain": cur_count}
+
+@app.get("/get-username")
+def get_user(current_user: int, db: sqlite3.Connection = Depends(get_db)):
+    cur = db.cursor()
+    cur.execute("SELECT username FROM users WHERE user_id = ?", (current_user,))
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        print(row)
+
+    return {"current user": rows}
+
+@app.get("/get-user-id")
+def get_user_id(current_user: str, db: sqlite3.Connection = Depends(get_db)):
+    cur = db.cursor()
+    cur.execute("SELECT user_id FROM users WHERE username = ?", (current_user,))
+    rows = cur.fetchall()
+
+
+    return rows

@@ -6,6 +6,7 @@ from fastapi import FastAPI, Depends, Response, HTTPException, status, Request
 from pydantic import BaseModel, BaseSettings
 import uuid
 from datetime import datetime
+DATABASE_user = './var/user.db'
 # connect database setting from .env file
 # convert data from stats.db to populated.sql
 # sqlite3 ./var/stats.db .dump > ./share/track/populated.sql
@@ -185,4 +186,3 @@ def streak_stats(db: sqlite3.Connection = Depends(get_db)):
     for user in curr:
         res.append({'username': user[0], 'streaks': user[1]})
     return {"Top-10 Users": res}
-
